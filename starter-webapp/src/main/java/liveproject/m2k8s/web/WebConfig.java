@@ -19,20 +19,20 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
   @Bean
   public ViewResolver viewResolver(SpringTemplateEngine templateEngine) {
-    ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+    final ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
     viewResolver.setTemplateEngine(templateEngine);
     return viewResolver;
   }
   @Bean
   public SpringTemplateEngine templateEngine(TemplateResolver templateResolver) {
-    SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+    final SpringTemplateEngine templateEngine = new SpringTemplateEngine();
     templateEngine.setTemplateResolver(templateResolver);
     return templateEngine;
   }
 
   @Bean
   public TemplateResolver templateResolver() {
-    TemplateResolver templateResolver = new ServletContextTemplateResolver();
+    final TemplateResolver templateResolver = new ServletContextTemplateResolver();
     templateResolver.setPrefix("/WEB-INF/views/");
     templateResolver.setSuffix(".html");
     templateResolver.setTemplateMode("HTML5");
@@ -43,5 +43,4 @@ public class WebConfig extends WebMvcConfigurerAdapter {
   public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
     configurer.enable();
   }
-  
 }
