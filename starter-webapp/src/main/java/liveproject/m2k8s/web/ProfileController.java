@@ -58,8 +58,8 @@ public class ProfileController {
 
     @RequestMapping(value = "/{username}", method = GET)
     public String showProfile(@PathVariable String username, Model model) {
-        log.debug("Reading model for: "+username);
-        Profile profile = profileService.getProfile(username);
+        log.debug("Reading model for: " + username);
+        final Profile profile = profileService.getProfile(username);
         model.addAttribute(profile);
         return "profile";
     }
@@ -70,7 +70,7 @@ public class ProfileController {
         if (!username.equals(profile.getUsername())) {
             throw new RuntimeException("Cannot change username for Profile");
         }
-        log.debug("Updating model for: "+username);
+        log.debug("Updating model for: " + username);
         profileService.update(profile);
         model.addAttribute(profile);
         return "profile";

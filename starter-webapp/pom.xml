@@ -194,8 +194,8 @@
         <xmlunit2.version>2.6.4</xmlunit2.version>
 
         <!-- profile-mvc initial dependencies -->
-        <springVersion>4.3.29.RELEASE</springVersion>
-        <springDataJpaVersion>1.3.2.RELEASE</springDataJpaVersion>
+        <spring.version>5.2.10.RELEASE</spring.version>
+        <spring-dat-jpa.version>2.3.5.RELEASE</spring-dat-jpa.version>
 
         <spring-boot.version>2.2.11.RELEASE</spring-boot.version>
     </properties>
@@ -204,17 +204,17 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>${springVersion}</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>${springVersion}</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
-            <version>${springDataJpaVersion}</version>
+            <version>${spring-dat-jpa.version}</version>
             <exclusions>
                 <exclusion>
                     <artifactId>spring-tx</artifactId>
@@ -233,7 +233,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>${springVersion}</version>
+            <version>${spring.version}</version>
         </dependency>
 
         <!-- API, java.xml.bind module -->
@@ -274,11 +274,6 @@
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
             <version>${hikaricp.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>${h2.version}</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -335,7 +330,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>${springVersion}</version>
+            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

@@ -24,7 +24,7 @@ public class ProfileService {
     }
 
     public void update(Profile profile) {
-        Profile dbProfile = profileRepository.findByUsername(profile.getUsername());
+        final Profile dbProfile = profileRepository.findByUsername(profile.getUsername());
         boolean dirty = false;
         if (!StringUtils.isEmpty(profile.getEmail())
                 && !profile.getEmail().equals(dbProfile.getEmail())) {
@@ -42,8 +42,7 @@ public class ProfileService {
             dirty = true;
         }
         if (dirty) {
-            profile.setPassword(dbProfile.getPassword());
-            profileRepository.save(profile);
+            profileRepository.save(dbProfile);
         }
     }
 }

@@ -6,6 +6,6 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import(DataConfig.class)
-@ComponentScan(basePackages={"liveproject.m2k8s"})
+@ComponentScan(basePackages = {"liveproject.m2k8s"})
 public class RootConfig {
 }

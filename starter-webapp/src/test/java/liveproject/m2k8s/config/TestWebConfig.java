@@ -14,8 +14,8 @@ public class TestWebConfig {
 
     @Bean
     public ProfileService profileService() {
-        ProfileService mock = Mockito.mock(ProfileService.class);
-        Profile zasu = Profile.builder()
+        final ProfileService mock = Mockito.mock(ProfileService.class);
+        final Profile zasu = Profile.builder()
                 .firstName("Zasu")
                 .lastName("Pitts")
                 .id(1L)
