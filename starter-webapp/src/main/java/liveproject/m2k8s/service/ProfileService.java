@@ -42,6 +42,7 @@ public class ProfileService {
             dirty = true;
         }
         if (dirty) {
+            profile.setPassword(dbProfile.getPassword());
             profileRepository.save(profile);
         }
     }

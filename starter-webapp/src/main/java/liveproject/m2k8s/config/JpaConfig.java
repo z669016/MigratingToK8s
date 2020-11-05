@@ -35,18 +35,17 @@ class JpaConfig {
     @Value("${hibernate.use_sql_comments}")
     private String useSqlComments;
 
-
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
-        LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+        final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource);
 
-        String entities = ClassUtils.getPackageName(Application.class);
+        final String entities = ClassUtils.getPackageName(Application.class);
         entityManagerFactoryBean.setPackagesToScan(entities);
 
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 
-        Properties jpaProperties = new Properties();
+        final Properties jpaProperties = new Properties();
         jpaProperties.put(AvailableSettings.DIALECT, dialect);
         jpaProperties.put(AvailableSettings.HBM2DDL_AUTO, hbm2ddlAuto);
         jpaProperties.put(AvailableSettings.SHOW_SQL, showSql);
