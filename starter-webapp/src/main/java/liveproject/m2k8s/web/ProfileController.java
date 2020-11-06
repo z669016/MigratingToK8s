@@ -10,7 +10,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,7 +20,6 @@ import javax.validation.Valid;
 @RequestMapping("/profile")
 public class ProfileController {
 
-    public static final String PROFILE = "profile";
     public static final String REGISTER_FORM = "registerForm";
     public static final String PROFILE_FORM = "profile";
     private ProfileService profileService;
@@ -38,7 +37,7 @@ public class ProfileController {
 
     @GetMapping(value = "/register")
     public String showRegistrationForm(Model model) {
-        model.addAttribute(PROFILE, new NewProfile());
+        model.addAttribute(new NewProfile());
         return REGISTER_FORM;
     }
 
@@ -46,9 +45,9 @@ public class ProfileController {
     @Transactional
     public String processRegistration(
             @Valid NewProfile newProfile,
-            Errors errors,
+            BindingResult bindingResult,
             Model model) {
-        if (errors.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return REGISTER_FORM;
         }
 
@@ -60,22 +59,24 @@ public class ProfileController {
     public String showProfile(@PathVariable String username, Model model) {
         log.debug("Reading model for: " + username);
         final UpdateProfile updateProfile = profileService.getProfile(username);
-        model.addAttribute(PROFILE, updateProfile);
+        model.addAttribute(updateProfile);
         return PROFILE_FORM;
     }
 
     @PostMapping(value = "/{username}")
     @Transactional
-    public String updateProfile(@PathVariable String username, @ModelAttribute @Valid UpdateProfile updateProfile, Errors errors, Model model) {
-        if (!errors.hasErrors()) {
-            if (!username.equals(updateProfile.getUsername())) {
+    public String updateProfile(@PathVariable String username,
+                                @Valid UpdateProfile profile,
+                                BindingResult bindingResult,
+                                Model model) {
+        if (!bindingResult.hasErrors()) {
+            if (!username.equals(profile.getUsername())) {
                 throw new RuntimeException("Cannot change username for Profile");
             }
 
             log.debug("Updating model for: " + username);
-            profileService.update(updateProfile);
+            profileService.update(profile);
         }
-        model.addAttribute(PROFILE, updateProfile);
         return PROFILE_FORM;
     }
 }

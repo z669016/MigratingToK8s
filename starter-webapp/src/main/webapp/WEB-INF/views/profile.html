@@ -11,17 +11,24 @@
 
     <div id="content">
       <h1>Your Profile</h1>
-      <form action="#" th:action="@{/profile/{username}(username=${profile.username})}" th:object="${profile}" method="post">
-        <input type="hidden" name="username" th:value="${profile.username}" /> <br/>
-        <input type="text" name="username" th:value="${profile.username}" disabled="disabled" /> <br/>
-        <input type="text" name="firstName" th:value="${profile.firstName}" /> <br/>
-        <input type="text" name="lastName" th:value="${profile.lastName}" /> <br/>
-        <input type="text" name="email" th:value="${profile.email}" /> <br/>
+      <form action="#" th:action="@{/profile/{username}(username=${updateProfile.username})}" th:object="${updateProfile}" method="post">
+        <div class="errors" th:if="${#fields.hasErrors('*')}">
+          <ul>
+            <li th:each="err : ${#fields.errors('*')}"
+                th:text="${err}">Input is incorrect</li>
+          </ul>
+        </div>
+
+        <input type="hidden" name="username" th:value="${updateProfile.username}" /> <br/>
+        <input type="text" name="username" th:value="${updateProfile.username}" disabled="disabled" /> <br/>
+        <input type="text" name="firstName" th:value="${updateProfile.firstName}" /> <br/>
+        <input type="text" name="lastName" th:value="${updateProfile.lastName}" /> <br/>
+        <input type="text" name="email" th:value="${updateProfile.email}" /> <br/>
         <input type="submit" class="btn btn-primary" value="Update Profile" />
       </form>
-      <span th:text="${profile.username}">username</span><br/>
-      <span th:text="${profile.firstName}">First</span> <span th:text="${profile.lastName}">Last</span><br/>
-      <span th:text="${profile.email}">email</span>
+      <span th:text="${updateProfile.username}">username</span><br/>
+      <span th:text="${updateProfile.firstName}">First</span> <span th:text="${updateProfile.lastName}">Last</span><br/>
+      <span th:text="${updateProfile.email}">email</span>
     </div>
 
     <div id="footer" th:include="page :: copy"></div>
