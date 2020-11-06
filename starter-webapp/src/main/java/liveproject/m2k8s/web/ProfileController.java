@@ -46,7 +46,8 @@ public class ProfileController {
     @Transactional
     public String processRegistration(
             @Valid NewProfile newProfile,
-            Errors errors) {
+            Errors errors,
+            Model model) {
         if (errors.hasErrors()) {
             return REGISTER_FORM;
         }

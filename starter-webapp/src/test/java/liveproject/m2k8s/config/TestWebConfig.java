@@ -11,7 +11,6 @@ import static org.mockito.Mockito.when;
 
 @Configuration
 public class TestWebConfig {
-
     @Bean
     public ProfileService profileService() {
         final ProfileService mock = Mockito.mock(ProfileService.class);

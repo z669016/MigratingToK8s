@@ -10,7 +10,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 public class ProfileServiceTest {
-    private ProfileRepository profileRepository = Mockito.mock(ProfileRepository.class);
+    final private ProfileRepository profileRepository = Mockito.mock(ProfileRepository.class);
+
     private ProfileService profileService;
 
     @BeforeEach
