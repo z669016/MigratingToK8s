@@ -34,6 +34,6 @@ public class ProfileControllerTest {
         mockMvc.perform(get("/profile/zasupitts"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("profile"))
-                .andExpect(model().attribute("profile", hasProperty("id", is(1L))));
+                .andExpect(model().attribute("profile", hasProperty("email", is("zasupitts@hollywood.com"))));
     }
 }

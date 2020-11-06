@@ -1,6 +1,6 @@
 package liveproject.m2k8s.service;
 
-import liveproject.m2k8s.Profile;
+import liveproject.m2k8s.data.Profile;
 import liveproject.m2k8s.data.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,30 +15,39 @@ public class ProfileService {
         this.profileRepository = profileRepository;
     }
 
-    public Profile getProfile(String username) {
-        return profileRepository.findByUsername(username);
+    public UpdateProfile getProfile(String username) {
+        final Profile profile = profileRepository.findByUsername(username);
+        return new UpdateProfile(profile.getUsername(), profile.getFirstName(), profile.getLastName(), profile.getEmail());
     }
 
-    public void save(Profile profile) {
-        profileRepository.save(profile);
+    public void save(NewProfile newProfile) {
+        Profile profile = profileRepository.findByUsername(newProfile.getUsername());
+        if (profile == null) {
+            profile = new Profile(newProfile.getUsername(),
+                    newProfile.getPassword(),
+                    newProfile.getFirstName(),
+                    newProfile.getLastName(),
+                    newProfile.getEmail());
+            profileRepository.save(profile);
+        }
     }
 
-    public void update(Profile profile) {
-        final Profile dbProfile = profileRepository.findByUsername(profile.getUsername());
+    public void update(UpdateProfile updateProfile) {
+        final Profile dbProfile = profileRepository.findByUsername(updateProfile.getUsername());
         boolean dirty = false;
-        if (!StringUtils.isEmpty(profile.getEmail())
-                && !profile.getEmail().equals(dbProfile.getEmail())) {
-            dbProfile.setEmail(profile.getEmail());
+        if (!StringUtils.isEmpty(updateProfile.getEmail())
+                && !updateProfile.getEmail().equals(dbProfile.getEmail())) {
+            dbProfile.setEmail(updateProfile.getEmail());
             dirty = true;
         }
-        if (!StringUtils.isEmpty(profile.getFirstName())
-                && !profile.getFirstName().equals(dbProfile.getFirstName())) {
-            dbProfile.setFirstName(profile.getFirstName());
+        if (!StringUtils.isEmpty(updateProfile.getFirstName())
+                && !updateProfile.getFirstName().equals(dbProfile.getFirstName())) {
+            dbProfile.setFirstName(updateProfile.getFirstName());
             dirty = true;
         }
-        if (!StringUtils.isEmpty(profile.getLastName())
-                && !profile.getLastName().equals(dbProfile.getLastName())) {
-            dbProfile.setLastName(profile.getLastName());
+        if (!StringUtils.isEmpty(updateProfile.getLastName())
+                && !updateProfile.getLastName().equals(dbProfile.getLastName())) {
+            dbProfile.setLastName(updateProfile.getLastName());
             dirty = true;
         }
         if (dirty) {

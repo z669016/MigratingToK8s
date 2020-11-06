@@ -1,17 +1,14 @@
 package liveproject.m2k8s.service;
 
-import liveproject.m2k8s.Profile;
+import liveproject.m2k8s.data.Profile;
 import liveproject.m2k8s.data.ProfileRepository;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
 public class ProfileServiceTest {
     private ProfileRepository profileRepository = Mockito.mock(ProfileRepository.class);
     private ProfileService profileService;
@@ -32,7 +29,7 @@ public class ProfileServiceTest {
 
     @Test
     public void test_getProfile() {
-        final Profile zasupitts = profileService.getProfile("zasupitts");
+        final UpdateProfile zasupitts = profileService.getProfile("zasupitts");
         assertEquals("Zasu", zasupitts.getFirstName());
     }
 }

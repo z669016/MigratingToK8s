@@ -1,7 +1,7 @@
 package liveproject.m2k8s.config;
 
-import liveproject.m2k8s.Profile;
 import liveproject.m2k8s.service.ProfileService;
+import liveproject.m2k8s.service.UpdateProfile;
 import liveproject.m2k8s.web.ProfileController;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
@@ -15,13 +15,11 @@ public class TestWebConfig {
     @Bean
     public ProfileService profileService() {
         final ProfileService mock = Mockito.mock(ProfileService.class);
-        final Profile zasu = Profile.builder()
+        final UpdateProfile zasu = UpdateProfile.builder()
                 .firstName("Zasu")
                 .lastName("Pitts")
-                .id(1L)
                 .email("zasupitts@hollywood.com")
                 .username("zasupitts")
-                .password("changeme")
                 .build();
         when(mock.getProfile("zasupitts")).thenReturn(zasu);
         return mock;

@@ -1,4 +1,4 @@
-package liveproject.m2k8s;
+package liveproject.m2k8s.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,5 +47,4 @@ public class Profile {
     public Profile(String username, String password, String firstName, String lastName, String email) {
         this(null, username, password, firstName, lastName, email);
     }
-
 }
