@@ -65,13 +65,15 @@ public class ProfileController {
 
     @PostMapping(value = "/{username}")
     @Transactional
-    public String updateProfile(@PathVariable String username, @ModelAttribute UpdateProfile updateProfile, Model model) {
-        if (!username.equals(updateProfile.getUsername())) {
-            throw new RuntimeException("Cannot change username for Profile");
-        }
+    public String updateProfile(@PathVariable String username, @ModelAttribute @Valid UpdateProfile updateProfile, Errors errors, Model model) {
+        if (!errors.hasErrors()) {
+            if (!username.equals(updateProfile.getUsername())) {
+                throw new RuntimeException("Cannot change username for Profile");
+            }
 
-        log.debug("Updating model for: " + username);
-        profileService.update(updateProfile);
+            log.debug("Updating model for: " + username);
+            profileService.update(updateProfile);
+        }
         model.addAttribute(PROFILE, updateProfile);
         return PROFILE_FORM;
     }
