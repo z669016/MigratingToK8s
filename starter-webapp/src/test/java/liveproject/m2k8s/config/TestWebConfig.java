@@ -2,7 +2,6 @@ package liveproject.m2k8s.config;
 
 import liveproject.m2k8s.service.ProfileService;
 import liveproject.m2k8s.service.UpdateProfile;
-import liveproject.m2k8s.web.ProfileController;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,10 +21,5 @@ public class TestWebConfig {
                 .build();
         when(mock.getProfile("zasupitts")).thenReturn(zasu);
         return mock;
-    }
-
-    @Bean
-    public ProfileController profileController() {
-        return new ProfileController(profileService());
     }
 }

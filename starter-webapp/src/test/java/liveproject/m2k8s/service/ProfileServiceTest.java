@@ -15,7 +15,7 @@ public class ProfileServiceTest {
     private ProfileService profileService;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         profileService = new ProfileService(profileRepository);
         final Profile zasu = Profile.builder()
                 .id(1L)
@@ -29,7 +29,7 @@ public class ProfileServiceTest {
     }
 
     @Test
-    public void test_getProfile() {
+    void test_getProfile() {
         final UpdateProfile zasupitts = profileService.getProfile("zasupitts");
         assertThat(zasupitts.getFirstName()).isEqualTo("Zasu");
     }
