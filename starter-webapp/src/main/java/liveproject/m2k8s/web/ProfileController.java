@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @Slf4j
@@ -45,8 +46,7 @@ public class ProfileController {
     @Transactional
     public String processRegistration(
             @Valid NewProfile newProfile,
-            BindingResult bindingResult,
-            Model model) {
+            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return REGISTER_FORM;
         }
@@ -58,7 +58,14 @@ public class ProfileController {
     @GetMapping(value = "/{username}")
     public String showProfile(@PathVariable String username, Model model) {
         log.debug("Reading model for: " + username);
-        final UpdateProfile updateProfile = profileService.getProfile(username);
+        final Optional<UpdateProfile> updateProfile = profileService.getProfile(username);
+        if (!updateProfile.isPresent()) {
+            final NewProfile newProfile = new NewProfile();
+            newProfile.setUsername(username);
+            model.addAttribute(newProfile);
+            return REGISTER_FORM;
+        }
+
         model.addAttribute(updateProfile);
         return PROFILE_FORM;
     }
@@ -67,8 +74,7 @@ public class ProfileController {
     @Transactional
     public String updateProfile(@PathVariable String username,
                                 @Valid UpdateProfile profile,
-                                BindingResult bindingResult,
-                                Model model) {
+                                BindingResult bindingResult) {
         if (!bindingResult.hasErrors()) {
             if (!username.equals(profile.getUsername())) {
                 throw new RuntimeException("Cannot change username for Profile");

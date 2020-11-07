@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Optional;
+
 @Service
 public class ProfileService {
     private ProfileRepository profileRepository;
@@ -15,9 +17,12 @@ public class ProfileService {
         this.profileRepository = profileRepository;
     }
 
-    public UpdateProfile getProfile(String username) {
+    public Optional<UpdateProfile> getProfile(String username) {
         final Profile profile = profileRepository.findByUsername(username);
-        return new UpdateProfile(profile.getUsername(), profile.getFirstName(), profile.getLastName(), profile.getEmail());
+        return profile == null ? Optional.empty() : Optional.of(new UpdateProfile(profile.getUsername(),
+                profile.getFirstName(),
+                profile.getLastName(),
+                profile.getEmail()));
     }
 
     public void save(NewProfile newProfile) {
@@ -34,24 +39,26 @@ public class ProfileService {
 
     public void update(UpdateProfile updateProfile) {
         final Profile dbProfile = profileRepository.findByUsername(updateProfile.getUsername());
-        boolean dirty = false;
-        if (!StringUtils.isEmpty(updateProfile.getEmail())
-                && !updateProfile.getEmail().equals(dbProfile.getEmail())) {
-            dbProfile.setEmail(updateProfile.getEmail());
-            dirty = true;
-        }
-        if (!StringUtils.isEmpty(updateProfile.getFirstName())
-                && !updateProfile.getFirstName().equals(dbProfile.getFirstName())) {
-            dbProfile.setFirstName(updateProfile.getFirstName());
-            dirty = true;
-        }
-        if (!StringUtils.isEmpty(updateProfile.getLastName())
-                && !updateProfile.getLastName().equals(dbProfile.getLastName())) {
-            dbProfile.setLastName(updateProfile.getLastName());
-            dirty = true;
-        }
-        if (dirty) {
-            profileRepository.save(dbProfile);
+        if (dbProfile != null) {
+            boolean dirty = false;
+            if (!StringUtils.isEmpty(updateProfile.getEmail())
+                    && !updateProfile.getEmail().equals(dbProfile.getEmail())) {
+                dbProfile.setEmail(updateProfile.getEmail());
+                dirty = true;
+            }
+            if (!StringUtils.isEmpty(updateProfile.getFirstName())
+                    && !updateProfile.getFirstName().equals(dbProfile.getFirstName())) {
+                dbProfile.setFirstName(updateProfile.getFirstName());
+                dirty = true;
+            }
+            if (!StringUtils.isEmpty(updateProfile.getLastName())
+                    && !updateProfile.getLastName().equals(dbProfile.getLastName())) {
+                dbProfile.setLastName(updateProfile.getLastName());
+                dirty = true;
+            }
+            if (dirty) {
+                profileRepository.save(dbProfile);
+            }
         }
     }
 }
