@@ -66,7 +66,7 @@ public class ProfileController {
             return REGISTER_FORM;
         }
 
-        model.addAttribute(updateProfile);
+        model.addAttribute(updateProfile.get());
         return PROFILE_FORM;
     }
 
